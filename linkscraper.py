@@ -18,7 +18,7 @@ def getLinks():
     html = htmlBytes.decode("utf-8")
     soupPage = BeautifulSoup(html, "html.parser")
     linkList = soupPage.find_all("a")
-    newFile = open(os.path.join(fileLocationBox.get(), fileBox.get(), ".txt", "w"))
+    newFile = open(os.path.join(fileLocationBox.get(), fileBox.get(), ".txt"), "w")
 
     #pulling all links from the page
     for tag in linkList:
