@@ -7,7 +7,7 @@ import sys
 import tkinter
 from tkinter import *
 from tkinter import messagebox
-
+import os
 
 
 def getLinks():
@@ -18,7 +18,7 @@ def getLinks():
     html = htmlBytes.decode("utf-8")
     soupPage = BeautifulSoup(html, "html.parser")
     linkList = soupPage.find_all("a")
-    newFile = open(fileBox.get() + ".txt", "w")
+    newFile = open(os.path.join(fileLocationBox.get(), fileBox.get(), ".txt", "w"))
 
     #pulling all links from the page
     for tag in linkList:
@@ -42,6 +42,9 @@ urlFrame.pack(fill = X)
 fileFrame = Frame(top)
 fileFrame.pack(fill = X)
 
+fileLocationFrame = Frame(top)
+fileLocationFrame.pack(fill = X)
+
 buttonFrame = Frame(top)
 buttonFrame.pack(fill = X)
 
@@ -52,10 +55,19 @@ urlBox.pack(side = LEFT, fill = BOTH)
 
 fileLabel = Label(fileFrame, text="name of new file:")
 fileLabel.pack(side = LEFT)
-fileBox = Entry(fileFrame, text = "newFileName")
+fileBox = Entry(fileFrame)
+fileBox.insert(0, "newFileName")
 fileBox.pack(side = LEFT)
 txtLabel = Label(fileFrame, text = ".txt")
 txtLabel.pack(side = LEFT)
+
+fileLocationLabel = Label(fileLocationFrame, text = "Where would you like the file saved?")
+fileLocationLabel.pack(side = LEFT)
+#path to documents folder for default file location
+docPath = os.path.join(os.path.expanduser("~"), "Documents")
+fileLocationBox = Entry(fileLocationFrame, width = 40)
+fileLocationBox.insert(0, docPath)
+fileLocationBox.pack(side = LEFT)
 
 scrapeButton = Button(buttonFrame, text = "Get Links!", command = getLinks)
 scrapeButton.pack()
